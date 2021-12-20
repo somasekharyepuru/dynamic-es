@@ -1,0 +1,15 @@
+<div class="wrapper">
+    <div *ngFor="let message of messages" class="toast">
+        <table (click)="dismiss(message.id)" *ngIf="message.dismissed == false" [@showHide] class="ui table">
+            <tr>
+                <td class="toast-icon" width='50px'><i
+                    class="large inverted check icon"></i></td>
+                <td>
+                    <div class="toast-message">
+                        {{message.content}}
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

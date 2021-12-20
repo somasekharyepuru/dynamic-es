@@ -1,0 +1,28 @@
+<div class="content">
+    <div class="ui grid">
+        <div class="{{layoutColumnOneWidth}} wide column">
+            <dashboard-typeahead-input
+                (selectionEvent)="filterListBySearchString($event)"
+                [placeHolderText]="placeHolderText"
+                [searchList]="objectTitleList"
+                [typeAheadIsInMenu]="typeAheadIsInMenu">
+            </dashboard-typeahead-input>
+            <dashboard-filter-list #filterComponent
+                                   (tagSelectEvent)="filterTag.updateFilterList($event)"
+                                   [facet_tags]="facetTags">
+
+            </dashboard-filter-list>
+        </div>
+        <div class="{{layoutColumnTwoWidth}} wide column">
+            <br>
+            <dashboard-filter-tag #filterTag
+                                  (updateFilterListEvent)="filterListByTags($event)">
+
+            </dashboard-filter-tag>
+
+            <div class="list-content">
+                <ng-template [ngForOf]="objectList" [ngForTemplate]="template" ngFor></ng-template>
+            </div>
+        </div>
+    </div>
+</div>

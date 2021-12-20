@@ -1,0 +1,53 @@
+<div #messagemodal_tag class="ui long modal">
+    <div class="header">
+        <h2>{{modalheader}}</h2>
+    </div>
+
+    <dashboard-data-list
+
+        [facetTags]="facetTags"
+        [layoutColumnOneWidth]="layoutColumnOneWidth"
+        [layoutColumnTwoWidth]="layoutColumnTwoWidth"
+        [listHeader]="listHeader"
+        [objectList]="gadgetObjectList"
+        [objectTitleList]="gadgetObjectTitleList"
+        [placeHolderText]="placeHolderText"
+        [typeAheadIsInMenu]="typeAheadIsInMenu">
+
+        <ng-template let-item="$implicit">
+
+            <div [@showHideAnimation] class="ui segment" style="background-color:white;">
+                <div class="ui large middle aligned divided list">
+                    <div class="item">
+                        <div class="right floated content">
+                            <!-- todo : if there are more than one action display a button with
+                            vertical ellipse and implement onHover to show all action buttons
+                            -->
+                            <a (click)="actionHandler(item, item.actions[0].name)"
+                               *ngIf="item.actions.length == 1"
+                               color="primary"
+                               mat-raised-button routerLink=".">
+                                {{item.actions[0].name}}
+                            </a>
+                        </div>
+                        <img class="ui image" src="{{item.icon}}">
+                        <div class="content">
+                            <div class="header">{{item.name}}</div>
+                            {{item.description}}
+                        </div>
+                    </div>
+                </div>
+                <div class="ui bottom attached">
+                    <button *ngFor="let tag of item.tags" class="ui basic gray compact button">{{tag.name}}
+                    </button>
+                </div>
+            </div>
+
+        </ng-template>
+
+    </dashboard-data-list>
+
+    <div class="actions">
+        <div class="ui approve button">Close</div>
+    </div>
+</div>

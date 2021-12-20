@@ -1,0 +1,90 @@
+<div #stickymenu_tag class="ui inverted menu sticky" ng-show="show" style="height: 66px !important">
+
+
+    <dashboard-typeahead-input (ArtificialIntelligenceEventEmitter)="emitBoardAIAddGadgetEvent($event)" *ngIf="env.menu.aiSearch" [placeHolderText]="placeHolderText"
+                               [searchList]="searchList"
+                               [typeAheadIsInMenu]="typeAheadIsInMenu"
+                               class="item"
+                               style="width:25%; padding-bottom:0">
+    </dashboard-typeahead-input>
+
+
+    <div class="ui secondary inverted pointing menu board">
+        <a (click)="emitBoardSelectEvent(board)" *ngFor="let board of dashboardList; let i = index"
+           [ngClass]="{'active':board == selectedBoard}"
+           class="item">
+            {{board}}
+        </a>
+    </div>
+
+
+    <div class="right inverted menu">
+        <a (click)="toggleNotificationSideBar()" *ngIf="env.menu.notification"
+           class="item">
+            <i class="large inverted alarm icon"></i>
+            <div class="floating ui red label">
+                <span style="font-size: 1.2em; font-weight: normal">4</span>
+            </div>
+        </a>
+
+
+        <a (click)="addGadgetModal.showComponentLibraryModal('Add Gadget')"
+           class="item">
+            <i class="large inverted plus icon"></i>
+        </a>
+
+
+        <a (click)="toggleLayoutSideBar()"
+           class="item">
+            <i class="large inverted grid layout icon"></i>
+        </a>
+
+
+        <a (click)="boardConfigModal.showConfigurationModal('Configuration')"
+           class="item">
+            <i class="large inverted setting icon"></i>
+        </a>
+
+
+        <a (click)="toggleAboutSideBar()"
+           class="item">
+            <i class="large inverted info icon"></i>
+        </a>
+
+    </div>
+
+</div>
+<br>
+
+<!-- the modal will emit an event and call the grid component to add the requested cell to the board -->
+<dashboard-add-gadget-modal #addGadgetModal
+                            (addGadgetEvent)="emitBoardAddGadgetEvent($event)">
+</dashboard-add-gadget-modal>
+
+<dashboard-configuration-modal #boardConfigModal
+                               (dashboardCreateEvent)="emitBoardCreateEvent($event)"
+                               (dashboardDeleteEvent)="emitBoardDeleteEvent($event)"
+                               (dashboardEditEvent)="emitBoardEditEvent($event)"
+                               [dashboardList]="dashboardList">
+
+
+</dashboard-configuration-modal>
+
+
+<!-- side bar content -->
+<div #notificationSideBar_tag class="ui sidebar inverted right vertical menu">
+    <dashboard-notification-modal></dashboard-notification-modal>
+</div>
+
+<!-- side bar content -->
+<div #aboutSideBar_tag class="ui sidebar inverted right vertical menu">
+    <dashboard-about-modal></dashboard-about-modal>
+</div>
+
+
+<div #layoutSideBar_tag class="ui sidebar inverted right vertical menu">
+    <dashboard-layout-manager-modal (boardLayoutChangeEvent)="emitBoardChangeLayoutEvent($event)"
+                                    [layoutId]="layoutId">
+    </dashboard-layout-manager-modal>
+</div>
+
