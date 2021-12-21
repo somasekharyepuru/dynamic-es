@@ -3,7 +3,12 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/app",
-    "types": []
+    "experimentalDecorators": true,
+    "types": [],
+    "paths": {
+      "ngx-dynamic-dashboard": ["dist/ngx-dynamic-dashboard"],
+      "ngx-dynamic-dashboard/*": ["dist/ngx-dynamic-dashboard/*"]
+    }
   },
   "files": [
     "src/main.ts",

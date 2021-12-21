@@ -5,6 +5,9 @@
   To learn more about this file see: https://angular.io/config/solution-tsconfig.
 */
 {
+  "paths": {
+    "ngx-dynamic-dashboard": ["dist/ngx-dynamic-dashboard"]
+  },
     "files": [],
     "references": [
         {

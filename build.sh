@@ -1,4 +1,4 @@
-#!/bin/bash
+    #!/bin/bash
 
 #ng config -g cli.warnings.versionMismatch false
 

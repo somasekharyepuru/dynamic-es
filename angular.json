@@ -19,7 +19,14 @@
                         "production": {
                             "tsConfig": "projects/ngx-dynamic-dashboard/tsconfig.lib.prod.json"
                         }
-                    }
+                    },
+                    "assets": [
+                        "projects/ngx-dynamic-dashboard/src/favicon.ico",
+                        "projects/ngx-dynamic-dashboard/src/assets"
+                    ],
+                    "scripts": [
+                        "node_modules/jquery/dist/jquery.js"
+                    ]
                 },
                 "test": {
                     "builder": "@angular-devkit/build-angular:karma",
@@ -72,7 +79,9 @@
                         "styles": [
                             "projects/vassar-dynamic/src/styles.scss"
                         ],
-                        "scripts": []
+                        "scripts": [
+                            "node_modules/jquery/dist/jquery.js"
+                        ]
                     },
                     "configurations": {
                         "production": {
@@ -88,7 +97,7 @@
                             "extractCss": true,
                             "namedChunks": false,
                             "extractLicenses": true,
-                            "vendorChunk": false,
+                            "vendorChunk": true,
                             "buildOptimizer": true,
                             "budgets": [
                                 {
@@ -135,8 +144,7 @@
                         ],
                         "styles": [
                             "projects/vassar-dynamic/src/styles.scss"
-                        ],
-                        "scripts": []
+                        ]
                     }
                 },
                 "lint": {

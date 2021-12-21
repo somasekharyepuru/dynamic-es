@@ -23,5 +23,8 @@
     "exclude": [
         "src/test.ts",
         "**/*.spec.ts"
+    ],
+    "paths": [
+        "../../dist/ngx-dynamic-dashboard"
     ]
 }
