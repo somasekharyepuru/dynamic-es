@@ -25,7 +25,8 @@
                         "projects/ngx-dynamic-dashboard/src/assets"
                     ],
                     "scripts": [
-                        "node_modules/jquery/dist/jquery.js"
+                        "node_modules/jquery/dist/jquery.js",
+                        "node_modules/bootstrap/dist/js/bootstrap.js"
                     ]
                 },
                 "test": {
@@ -77,10 +78,12 @@
                             "projects/vassar-dynamic/src/assets"
                         ],
                         "styles": [
-                            "projects/vassar-dynamic/src/styles.scss"
+                            "projects/vassar-dynamic/src/styles.scss",
+                            "node_modules/fomantic-ui/dist/semantic.min.css"
                         ],
                         "scripts": [
-                            "node_modules/jquery/dist/jquery.js"
+                            "node_modules/jquery/dist/jquery.min.js",
+                            "node_modules/fomantic-ui/dist/semantic.min.js"
                         ]
                     },
                     "configurations": {

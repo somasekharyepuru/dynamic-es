@@ -39,7 +39,8 @@
   },
   "peerDependencies": {
     "@angular/common": "^10.0.5",
-    "@angular/core": "^10.0.5"
+    "@angular/core": "^10.0.5",
+    "jquery": "^3.6.0"
   },
   "dependencies": {
     "tslib": "^2.0.0"
