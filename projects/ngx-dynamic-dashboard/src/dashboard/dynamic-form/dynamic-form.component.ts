@@ -70,14 +70,11 @@ export class DynamicFormComponent implements OnInit, AfterViewInit {
 
     /* better solution that solves error: Expression has changed after it was checked exception resolution*/
     ngAfterViewInit(): void {
-
         this.changeDetectionRef.detectChanges();
     }
 
     ngOnInit() {
-
         this.form = this.pcs.toFormGroupFromPP(this.propertyPages);
-
     }
 
     onSubmit() {
@@ -95,13 +92,12 @@ export class DynamicFormComponent implements OnInit, AfterViewInit {
 
             setTimeout(function () {
                 this.showMessage = false;
-            }.bind(this), 2000);
+            }.bind(this), 500);
         }
     }
 
     setCurrentTab(tab) {
         this.currentTab = tab.groupId;
-
     }
 }
 

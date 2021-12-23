@@ -13,7 +13,7 @@ import { BarChartComponent } from './modules/gadget/bar-chart/bar-chart.componen
 
 export function GadgetRegistry(): () => void {
   return () => {
-    GadgetFactory.setComponentType('BarChart', BarChartComponent);
+    GadgetFactory.setComponentType('barChartComponent', BarChartComponent);
   };
 }
 

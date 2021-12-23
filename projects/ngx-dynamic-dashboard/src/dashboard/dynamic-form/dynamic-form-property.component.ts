@@ -31,7 +31,7 @@ export class DynamicFormPropertyComponent implements AfterViewInit {
     @Input() property: PropertyBase<any>;
     @Input() form: FormGroup;
     @Input() gadgetTags: any[];//todo - use to control what endpoints are displayed
-    endPoints: string[] = [];
+    endPoints: any[] = [];
 
     constructor() {
 
@@ -39,7 +39,6 @@ export class DynamicFormPropertyComponent implements AfterViewInit {
     }
 
     get isValid() {
-
         return this.form.controls[this.property.key].valid;
     }
 

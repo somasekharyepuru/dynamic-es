@@ -16,11 +16,11 @@ export class PropertyControlService {
         const group: any = {};
 
         propertyPages.forEach(propertyPage => {
-
+            group[propertyPage.groupId] = new FormGroup({});
             propertyPage.properties.forEach(property => {
-                group[property.key] = property.required ? new FormControl(property.value
+                group[propertyPage.groupId].addControl([property.key], property.required ? new FormControl(property.value
                     || '', Validators.required) : new FormControl(property.value
-                    || '');
+                    || ''))
             });
 
         });
