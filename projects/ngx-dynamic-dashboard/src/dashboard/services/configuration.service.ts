@@ -1,138 +1,52 @@
 /**
- * Created by jayhamilton on 2/7/17.
+ * Created by Eswar.
  */
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {EMPTY, Observable, Subscribable} from 'rxjs';
-import {defaultBoard} from './configuration-sample-default-board';
-import {sampleBoardCollection} from './configuration-sample-boards.model';
-import {environment} from '../../environments/environment';
 import {Board} from '../grid/Board';
+import { ExternalService, BOARD_LIST_API } from './external.service';
+
+const httpOptions = {
+    headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+    })
+};
+
 
 
 @Injectable()
 export class ConfigurationService {
     model: Board; // todo review this object closely
     currentModel: any; // this object helps with updates to property page values
-    demo = true;
-    env: any;
-
-    defaultBoard: any;
-    sampleBoardCollection: any;
-
-    /**
-     * todo - fix this hard coded store
-     * @type {string}
-     */
-    remoteConfigurationRepository = '';
-
-    constructor(private _http: HttpClient) {
-
-        this.defaultBoard = Object.assign({}, defaultBoard);
-        this.sampleBoardCollection = Object.assign({}, sampleBoardCollection);
-        this.env = environment;
-        this.seedLocalStorageWithSampleBoardCollection();
+    baseUrl:any;
+  
+    constructor(private _http: HttpClient,private externalService:ExternalService) {
+        this.baseUrl = ExternalService.getURLValue(BOARD_LIST_API.BASE_API);
     }
 
     public getBoards(): Observable<any> {
+        console.log(this.baseUrl)
+        console.log(ExternalService.getURLValue(BOARD_LIST_API.BOARD_LIST))
+        return this._http.get(this.baseUrl+ExternalService.getURLValue(BOARD_LIST_API.BOARD_LIST))
 
-        if (this.demo) {
-            return new Observable(observer => {
-                let data = JSON.parse(localStorage.getItem('board'));
-                if (!data) {
-                    data = {board: []};
-                }
-                observer.next(data.board);
-                return () => {
-                };
-            });
-
-        } else {
-            /**
-             * todo - this call is based on an internal representation (admin console) of something called a store.
-             * That concept requires refactoring.
-             */
-            return this._http.get(this.remoteConfigurationRepository);
-        }
     }
-
+    public getBoardById(id: string) {
+        console.log(id)
+        return this._http.get( this.baseUrl+ExternalService.getURLValue(BOARD_LIST_API.BOARD_DATA)+ id+"-dashboard.json");
+     
+    }
     public saveBoard(board: Board): Observable<any> {
-
         this.model = board;
-
-        if (Object.keys(board).length === 0 && board.constructor === Object) {
-            return EMPTY;
-        }
-
-        if (this.demo) {
-            return new Observable(observer => {
-                let board_collection;
-
-                // find and remove board from storage
-                this.deleteBoardFromLocalStore(board.title);
-
-                // get a collection object and add board to it
-                if ((board_collection = JSON.parse(localStorage.getItem('board'))) == null) {
-
-                    board_collection = {
-                        board: []
-                    };
-                }
-                board_collection['board'].push(board);
-
-                // save
-                localStorage.setItem('board', JSON.stringify(board_collection));
-
-                observer.next({});
-
-                return () => {
-                };
-
-            });
-
-        } else {
-
-            /**
-             * todo - a delete must happen here
-             *
-             */
-            const httpOptions = {
-                headers: new HttpHeaders({
-                    'Content-Type': 'application/json'
-                })
-            };
-
-            return this._http.post(this.remoteConfigurationRepository + '?id=' + board.title, JSON.stringify(board), httpOptions);
-        }
+        return this._http.post(this.baseUrl+ExternalService.getURLValue(BOARD_LIST_API.BOARD_UPDATE), JSON.stringify(board), httpOptions);
     }
 
-    public deleteBoard(boardTitle: string) {
-
-        if (this.demo) {
-
-            return new Observable(observer => {
-
-                this.deleteBoardFromLocalStore(boardTitle);
-
-                observer.next({});
-                return () => {
-                };
-
-            });
-
-        } else {
-
-            return this._http.delete(this.remoteConfigurationRepository + '/' + boardTitle);
-        }
+    public deleteBoard(boardId: string) {
+        return this._http.delete(this.baseUrl+ExternalService.getURLValue(BOARD_LIST_API.BOARD_DELETE));
     }
 
     public getDefaultBoard() {
-
-        return new Observable(observer => {
-            observer.next(this.defaultBoard);
-            return () => {
-            };
-        });
+        return this._http.delete(this.baseUrl+ExternalService.getURLValue(BOARD_LIST_API.BOARD_DATA));
     }
 
     /*
@@ -201,16 +115,7 @@ export class ConfigurationService {
         }
     }
 
-    private seedLocalStorageWithSampleBoardCollection() {
-
-        if (localStorage.getItem('board') === null) {
-
-
-            if (!this.env.production) {
-                localStorage.setItem('board', JSON.stringify(this.sampleBoardCollection));
-            }
-        }
-    }
+    
 
     private delete(board_collection: any) {
 

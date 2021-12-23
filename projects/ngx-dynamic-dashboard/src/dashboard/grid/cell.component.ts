@@ -38,6 +38,8 @@ export class CellComponent implements OnInit {
          create component instance dynamically
          */
         const component: Type<any> = GadgetFactory.getComponentType(this.gadgetType);
+
+        console.log(component,this.gadgetType)
         if (component) {
             const compFactory = this.cfr.resolveComponentFactory(component);
             const gadgetRef: ComponentRef<GadgetBase> = this.viewContainerRef.createComponent(compFactory);

@@ -1,4 +1,4 @@
-<div class="ui centered stackable grid" style="margin-left: 5px; margin-right: 5px"
+<!-- <div class="ui centered stackable grid" style="margin-left: 5px; margin-right: 5px"
 >
     <div *ngFor="let row of model.rows; let r = index" [ngClass]="{'short-row': row.columns.length > 3, 'tall-row': row.columns.length <= 3 }"
          class="row">
@@ -28,5 +28,36 @@
             </div>
         </ng-container>
     </div>
+</div> -->
+
+<style>
+    .grister-custom {
+        height: 100vh;
+    }
+</style>
+
+
+<div class="ui centered " style="margin-left: 5px; margin-right: 5px">
+    <gridster [options]="options" class="grister-custom">
+        <gridster-item [item]="item" *ngFor="let item of model.orderGadgets">
+            <dashboard-grid-cell [gadgetConfig]="item.gadget.config" [gadgetInstanceId]="item.gadget.instanceId"
+                [gadgetTags]="item.gadget.tags" [gadgetType]="item.gadget.componentType" class="target-box"
+                style="display:inline-block; width:100%">
+                <div class="target-box-placeholder"></div>
+
+            </dashboard-grid-cell>
+        </gridster-item>
+    </gridster>
+
 </div>
+
+
+
+
+
+
+
+
+
+
 <dashboard-toast></dashboard-toast>

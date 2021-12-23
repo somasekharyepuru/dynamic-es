@@ -3,6 +3,7 @@ import {ConfigurationService} from '../services/configuration.service';
 import {MenuEventService} from './menu-service';
 import {environment} from '../../environments/environment';
 import {IEvent} from './IEvent';
+import { Board } from '../grid/Board';
 
 
 declare var jQuery: any;
@@ -23,17 +24,16 @@ export class MenuComponent implements OnInit, AfterViewInit {
 
     host = window.location.host;
     dashboardList: any[] = [];
-    selectedBoard = '';
-    placeHolderText = 'Ask the board to do something!';
-    searchList: Array<string> = [];
-    env: any;
+    selectedBoard:Board = null;
 
-    @Input()
-    show = false;
+    @Input() show = false;
 
-    @ViewChild('notificationSideBar_tag', {static: false}) notificationSideBarRef: ElementRef;
-    @ViewChild('layoutSideBar_tag', {static: false}) layoutSideBarRef: ElementRef;
-    @ViewChild('aboutSideBar_tag', {static: false}) aboutSideBarRef: ElementRef;
+    @Input() activeBoardId:string = '';
+
+
+    // @ViewChild('notificationSideBar_tag', {static: false}) notificationSideBarRef: ElementRef;
+    // @ViewChild('layoutSideBar_tag', {static: false}) layoutSideBarRef: ElementRef;
+    // @ViewChild('aboutSideBar_tag', {static: false}) aboutSideBarRef: ElementRef;
     @ViewChild('stickymenu_tag', {static: false}) stickyMenuRef: ElementRef;
 
     notificationSideBar: any;
@@ -49,9 +49,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
                 private _menuEventService: MenuEventService) {
 
         this._menuEventService.unSubscribeAll();
-
         this.setupEventListeners();
-        this.env = environment;
     }
 
     setupEventListeners() {
@@ -72,7 +70,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        this.updateDashboardMenu('');
+        this.updateDashboardMenu(this.activeBoardId);
     }
 
     ngAfterViewInit() {
@@ -107,60 +105,42 @@ export class MenuComponent implements OnInit, AfterViewInit {
         this._menuEventService.raiseMenuEvent({name: 'boardAddGadgetEvent', data: event});
     }
 
-    emitBoardAIAddGadgetEvent(event) {
-        this._menuEventService.raiseMenuEvent({name: 'boardAIAddGadgetEvent', data: event});
-    }
-
-    updateDashboardMenu(selectedBoard: string) {
-
-        this._configurationService.getBoards().subscribe(data => {
-
+    updateDashboardMenu(selectedBoardId: string) {
+        this._configurationService.getBoards().subscribe((data) => {
             const me = this;
-            if (data && data instanceof Array && data.length) {
-                this.dashboardList.length = 0;
-
-
-                // sort boards
-                data.sort((a: any, b: any) => a.boardInstanceId - b.boardInstanceId);
-
-                data.forEach(board => {
-
-                    me.dashboardList.push(board.title);
-
-                });
-
-                if (selectedBoard === '') {
-
-                    this.boardSelect(this.dashboardList[0]);
-
-                } else {
-
-                    this.boardSelect(selectedBoard);
+            const boradList:Board[] = data['boards'];
+            for(let board of boradList){
+                this.dashboardList.push(board);
+                console.log(selectedBoardId, board)
+                if(selectedBoardId && selectedBoardId == board.id){
+                    
+                    this.boardSelect(board);
                 }
+
             }
         });
     }
 
-    boardSelect(selectedBoard: string) {
+    boardSelect(selectedBoard: Board) {
         this.selectedBoard = selectedBoard;
     }
 
-    toggleLayoutSideBar() {
-        this.layoutSideBar = jQuery(this.layoutSideBarRef.nativeElement);
-        this.layoutSideBar.sidebar('setting', 'transition', 'overlay');
-        this.layoutSideBar.sidebar('toggle');
-        this.layoutId = this._configurationService.currentModel.id;
-    }
+    // toggleLayoutSideBar() {
+    //     this.layoutSideBar = jQuery(this.layoutSideBarRef.nativeElement);
+    //     this.layoutSideBar.sidebar('setting', 'transition', 'overlay');
+    //     this.layoutSideBar.sidebar('toggle');
+    //     this.layoutId = this._configurationService.currentModel.id;
+    // }
 
-    toggleNotificationSideBar() {
-        this.notificationSideBar = jQuery(this.notificationSideBarRef.nativeElement);
-        this.notificationSideBar.sidebar('setting', 'transition', 'overlay');
-        this.notificationSideBar.sidebar('toggle');
-    }
+    // toggleNotificationSideBar() {
+    //     this.notificationSideBar = jQuery(this.notificationSideBarRef.nativeElement);
+    //     this.notificationSideBar.sidebar('setting', 'transition', 'overlay');
+    //     this.notificationSideBar.sidebar('toggle');
+    // }
 
-    toggleAboutSideBar() {
-        this.aboutSideBar = jQuery(this.aboutSideBarRef.nativeElement);
-        this.aboutSideBar.sidebar('setting', 'transition', 'overlay');
-        this.aboutSideBar.sidebar('toggle');
-    }
+    // toggleAboutSideBar() {
+    //     this.aboutSideBar = jQuery(this.aboutSideBarRef.nativeElement);
+    //     this.aboutSideBar.sidebar('setting', 'transition', 'overlay');
+    //     this.aboutSideBar.sidebar('toggle');
+    // }
 }

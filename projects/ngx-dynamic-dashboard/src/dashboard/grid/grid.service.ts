@@ -41,21 +41,21 @@ export class GadgetInstanceService {
 
         console.log('REMOVING GADGET');
         // remove instance representation from model
-        this.model.rows.forEach(function (row) {
-            row.columns.forEach(function (column) {
-                if (column.gadgets) {
-                    for (let i = column.gadgets.length - 1; i >= 0; i--) {
+        // this.model.rows.forEach(function (row) {
+        //     row.columns.forEach(function (column) {
+        //         if (column.gadgets) {
+        //             for (let i = column.gadgets.length - 1; i >= 0; i--) {
 
-                        if (column.gadgets[i].instanceId === id) {
+        //                 if (column.gadgets[i].instanceId === id) {
 
-                            column.gadgets.splice(i, 1);
+        //                     column.gadgets.splice(i, 1);
 
-                            break;
-                        }
-                    }
-                }
-            });
-        });
+        //                     break;
+        //                 }
+        //             }
+        //         }
+        //     });
+        // });
 
         // removes concrete instance from service
         for (let x = this.concreteGadgetInstances.length - 1; x >= 0; x--) {

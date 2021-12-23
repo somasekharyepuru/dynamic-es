@@ -8,8 +8,7 @@ import {CellComponent} from './cell.component';
 import {GadgetInstanceService} from './grid.service';
 import {ConfigurationService} from '../services/configuration.service';
 import {AddGadgetService} from '../add-gadget/service';
-
-import {DragDropModule} from '@angular/cdk/drag-drop';
+import {GridsterModule} from 'angular-gridster2';
 
 
 @NgModule({
@@ -18,7 +17,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
         FormsModule,
         ToastModule,
         HttpClientModule,
-        DragDropModule
+        GridsterModule
     ],
     declarations: [
         GridComponent,

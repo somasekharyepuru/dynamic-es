@@ -68,3 +68,6 @@ export * from './dashboard/gadgets/_common/gadget-property.service';
 export * from './dashboard/error/error-handler.component';
 export * from './dashboard/error/error.module';
 export * from './dashboard/services/runtime.service';
+
+export * from './dashboard/services/external.service';
+

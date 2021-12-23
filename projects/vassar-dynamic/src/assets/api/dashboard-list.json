@@ -1,0 +1,14 @@
+{
+  "boards": [
+    {
+      "title": "Board Sample 1",
+      "id": 1,
+      "boardURL": "dashabord-1"
+    },
+    {
+      "title": "Board Sample 2",
+      "id": 2,
+      "boardURL": "dashabord-2"
+    }
+  ]
+}

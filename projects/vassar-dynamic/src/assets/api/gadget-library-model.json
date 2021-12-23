@@ -38,7 +38,7 @@
                   "value": "",
                   "required": false,
                   "order": 4
-                }
+                },
                 {
                   "controlType": "hidden",
                   "key": "instanceId",

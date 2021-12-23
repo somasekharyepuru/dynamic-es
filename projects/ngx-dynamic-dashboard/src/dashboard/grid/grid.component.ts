@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, OnInit} from '@angular/core';
 import {GadgetInstanceService} from './grid.service';
 import {ConfigurationService} from '../services/configuration.service';
 import {GadgetConfigModel} from '../gadgets/_common/gadget-config-model';
@@ -6,7 +6,8 @@ import {AddGadgetService} from '../add-gadget/service';
 import {ToastService} from '../toast/toast.service';
 import {MenuEventService} from '../menu/menu-service';
 import {IEvent} from '../menu/IEvent';
-import {Column, Board} from './Board';
+import {Board} from './Board';
+import { GridType, DisplayGrid } from 'angular-gridster2';
 
 
 @Component({
@@ -15,30 +16,37 @@ import {Column, Board} from './Board';
     templateUrl: './grid.html',
     styleUrls: ['./styles-grid.css']
 })
-export class GridComponent {
+export class GridComponent implements OnInit {
 
     @Output() boardUpdateEvent: EventEmitter<any> = new EventEmitter();
 
+    @Input() activeBoardId:string;
+
     model: Board = <any>{};
     noGadgets = true;
-    dashedStyle: {};
-    dropZone1: any = null;
-    dropZone2: any = null;
-    dropZone3: any = null;
-
     gadgetLibrary: any[] = [];
 
+    options = {
+        gridType: GridType.ScrollVertical,
+        displayGrid: DisplayGrid.OnDragAndResize,
+        draggable: {
+          enabled: true
+        },
+        resizable: {
+          enabled: true
+        },
+ 
+        rowHeightRatio:1,
+        minCols:12,
+        outerMargin:false,
+        itemResizeCallback: (item) => {
+          // update DB with new size
+          // send the update to widgets
+        //   this.resizeEvent.emit(item);
+        }
+      };
+
     private boards: Board[];
-
-    /** todo
-     * Temporary objects for experimenting with AI
-     * @type
-     */
-
-    gridInsertionPosition = {
-        x: 0,
-        y: 0
-    };
 
     /**
      * Todo - split model and board operations. This class should really focus on an individual board model's operations
@@ -54,10 +62,7 @@ export class GridComponent {
                 private _menuEventService: MenuEventService) {
 
 
-        this.removeOldListeners();
-        this.setupEventListeners();
-        this.initializeBoard();
-        this.getGadgetLibrary();
+       
 
     }
 
@@ -70,6 +75,13 @@ export class GridComponent {
      * when changing the layout.
      *
      */
+    ngOnInit() {
+
+        this.removeOldListeners();
+        this.setupEventListeners();
+        this.initializeBoard();
+        this.getGadgetLibrary();
+    }
     removeOldListeners() {
 
         this._gadgetInstanceService.unSubscribeAll();
@@ -107,9 +119,7 @@ export class GridComponent {
                 case 'boardAddGadgetEvent':
                     this.addGadget(edata);
                     break;
-                case 'boardAIAddGadgetEvent':
-                    this.addGadgetUsingArtificialIntelligence(edata);
-                    break;
+                
             }
         });
 
@@ -147,22 +157,7 @@ export class GridComponent {
         return gadgetObject;
     }
 
-    addGadgetUsingArtificialIntelligence(aiObject: any) {
-
-        /** todo
-         * make confidence code configurable
-         */
-        if (aiObject && aiObject.operation) {
-            switch (aiObject.operation) {
-                case 'get_storage':
-                    this.addGadget(this.getGadgetFromLibrary('StorageObjectListComponent'));
-                    break;
-                case 'get_cpu':
-                    this.addGadget(this.getGadgetFromLibrary('CPUGadgetComponent'));
-                    break;
-            }
-        }
-    }
+    
 
     /**
      * This is the end of the experimental AI code.
@@ -175,36 +170,36 @@ export class GridComponent {
 
         let moveComplete = false;
 
-        this.getModel().rows.forEach(row => {
+        // this.getModel().rows.forEach(row => {
 
-            let colpos = 0;
+        //     let colpos = 0;
 
-            row.columns.forEach(column => {
+        //     row.columns.forEach(column => {
 
-                let gadgetpos = 0;
+        //         let gadgetpos = 0;
 
-                if (column.gadgets) {
+        //         if (column.gadgets) {
 
-                    column.gadgets.forEach(_gadget => {
+        //             column.gadgets.forEach(_gadget => {
 
-                        if (_gadget.instanceId === $event['item']['data'] && !moveComplete) {
+        //                 if (_gadget.instanceId === $event['item']['data'] && !moveComplete) {
 
-                            const gadget = column.gadgets.splice(gadgetpos, 1);
+        //                     const gadget = column.gadgets.splice(gadgetpos, 1);
 
 
-                            if (!this.getModel().rows[rowNumber].columns[columnNumber].gadgets) {
-                                this.getModel().rows[rowNumber].columns[columnNumber].gadgets = [];
-                            }
-                            this.getModel().rows[rowNumber].columns[columnNumber].gadgets.push(gadget[0]);
-                            this.saveBoard('drag drop operation', false);
-                            moveComplete = true;
-                        }
-                        gadgetpos++;
-                    });
-                    colpos++;
-                }
-            });
-        });
+        //                     if (!this.getModel().rows[rowNumber].columns[columnNumber].gadgets) {
+        //                         this.getModel().rows[rowNumber].columns[columnNumber].gadgets = [];
+        //                     }
+        //                     this.getModel().rows[rowNumber].columns[columnNumber].gadgets.push(gadget[0]);
+        //                     this.saveBoard('drag drop operation', false);
+        //                     moveComplete = true;
+        //                 }
+        //                 gadgetpos++;
+        //             });
+        //             colpos++;
+        //         }
+        //     });
+        // });
     }
 
     public createBoard(name: string) {
@@ -233,18 +228,18 @@ export class GridComponent {
         _gadget.instanceId = new Date().getTime();
         _gadget.config = new GadgetConfigModel(gadget.config);
 
-        this.setGadgetInsertPosition();
+        // this.setGadgetInsertPosition();
 
-        const x = this.gridInsertionPosition.x;
-        const y = this.gridInsertionPosition.y;
+        // const x = this.gridInsertionPosition.x;
+        // const y = this.gridInsertionPosition.y;
 
-        if (!this.getModel().rows[x].columns[y].gadgets) {
+        // if (!this.getModel().rows[x].columns[y].gadgets) {
 
-            this.getModel().rows[x].columns[y].gadgets = [];
-        }
-        this.getModel().rows[x].columns[y].gadgets.push(_gadget);
+        //     this.getModel().rows[x].columns[y].gadgets = [];
+        // }
+        // this.getModel().rows[x].columns[y].gadgets.push(_gadget);
 
-        this.saveBoard('Adding Gadget To The Board', false);
+        // this.saveBoard('Adding Gadget To The Board', false);
 
     }
 
@@ -253,49 +248,49 @@ export class GridComponent {
         console.log('IN UPDATE BOARD LAYOUT');
 
         // user selected the currently selected layout
-        if (structure.id === this.getModel().id) {
-            return;
-        }
+        // if (structure.id === this.getModel().id) {
+        //     return;
+        // }
 
-        // copy the current board's model
-        const _model = Object.assign({}, this.getModel());
+        // // copy the current board's model
+        // const _model = Object.assign({}, this.getModel());
 
-        // get just the columns that contain gadgets from all rows
-        const originalColumns: any[] = this.readColumnsFromOriginalModel(_model);
+        // // get just the columns that contain gadgets from all rows
+        // const originalColumns: any[] = this.readColumnsFromOriginalModel(_model);
 
-        // reset the copied model's rows, which include columns
-        _model.rows.length = 0;
+        // // reset the copied model's rows, which include columns
+        // _model.rows.length = 0;
 
-        // copy the contents of the requested structure into the temporary model
-        // we now have a board model we can populate with the original board's gadgets
-        Object.assign(_model.rows, structure.rows);
-        _model.structure = structure.structure;
-        _model.id = structure.id;
+        // // copy the contents of the requested structure into the temporary model
+        // // we now have a board model we can populate with the original board's gadgets
+        // Object.assign(_model.rows, structure.rows);
+        // _model.structure = structure.structure;
+        // _model.id = structure.id;
 
-        let originalColumnIndexToStartProcessingFrom = 0;
+        // let originalColumnIndexToStartProcessingFrom = 0;
 
-        /* For each column from the original board, copy its gadgets to the new structure.
-         The requested layout may have more or less columns than defined by the original layout. So the fillGridStructure method
-         will copy column content into the target. If there are more columns than the target,
-         the fillGridStructure will return the count of remaining columns to be processed and then process those.
-         */
-        while (originalColumnIndexToStartProcessingFrom < originalColumns.length) {
-            originalColumnIndexToStartProcessingFrom = this.fillGridStructure(
-                _model,
-                originalColumns,
-                originalColumnIndexToStartProcessingFrom);
-        }
+        // /* For each column from the original board, copy its gadgets to the new structure.
+        //  The requested layout may have more or less columns than defined by the original layout. So the fillGridStructure method
+        //  will copy column content into the target. If there are more columns than the target,
+        //  the fillGridStructure will return the count of remaining columns to be processed and then process those.
+        //  */
+        // while (originalColumnIndexToStartProcessingFrom < originalColumns.length) {
+        //     originalColumnIndexToStartProcessingFrom = this.fillGridStructure(
+        //         _model,
+        //         originalColumns,
+        //         originalColumnIndexToStartProcessingFrom);
+        // }
 
-        // This will copy the just processed model and present it to the board
-        this.setModel(_model);
+        // // This will copy the just processed model and present it to the board
+        // this.setModel(_model);
 
-        // clear temporary object
-        for (const member in _model) {
-            delete _model[member];
-        }
+        // // clear temporary object
+        // for (const member in _model) {
+        //     delete _model[member];
+        // }
 
-        // persist the board change
-        this.saveBoard('Grid Layout Update', false);
+        // // persist the board change
+        // this.saveBoard('Grid Layout Update', false);
     }
 
     public enableConfigMode() {
@@ -320,26 +315,26 @@ export class GridComponent {
 
         let gadgetCount = 0;
 
-        if (this.getModel().rows) {
-            this.getModel().rows.forEach(function (row) {
-                row.columns.forEach(function (column) {
-                    if (column.gadgets) {
-                        column.gadgets.forEach(function (gadget) {
-                            gadgetCount++;
-                        });
-                    }
-                });
-            });
-        }
+        // if (this.getModel().rows) {
+        //     this.getModel().rows.forEach(function (row) {
+        //         row.columns.forEach(function (column) {
+        //             if (column.gadgets) {
+        //                 column.gadgets.forEach(function (gadget) {
+        //                     gadgetCount++;
+        //                 });
+        //             }
+        //         });
+        //     });
+        // }
 
         this.noGadgets = !gadgetCount;
 
-        this.dashedStyle = {
-            'border-style': this.noGadgets ? 'dashed' : 'none',
-            'border-width': this.noGadgets ? '2px' : 'none',
-            'border-color': this.noGadgets ? 'darkgray' : 'none',
-            'padding': this.noGadgets ? '5px' : 'none'
-        };
+        // this.dashedStyle = {
+        //     'border-style': this.noGadgets ? 'dashed' : 'none',
+        //     'border-width': this.noGadgets ? '2px' : 'none',
+        //     'border-color': this.noGadgets ? 'darkgray' : 'none',
+        //     'padding': this.noGadgets ? '5px' : 'none'
+        // };
     }
 
     private readColumnsFromOriginalModel(_model) {
@@ -354,7 +349,7 @@ export class GridComponent {
 
     }
 
-    private fillGridStructure(destinationModelStructure, originalColumns: Column[], counter: number) {
+    private fillGridStructure(destinationModelStructure, originalColumns:any[], counter: number) {
 
         const me = this;
 
@@ -387,25 +382,23 @@ export class GridComponent {
 
     private initializeBoard() {
 
-        this._configurationService.getBoards().subscribe(boards => {
-            if (boards && boards instanceof Array && boards.length) {
-                this.boards = boards.sort((a, b) => {
-                    return a.boardInstanceId - b.boardInstanceId;
-                });
+        
+        console.log(this.activeBoardId)
 
-                this.loadBoard(this.boards[0].title);
-            } else {
-                this.loadDefaultBoard();
-            }
-        });
+        this._configurationService.getBoardById(this.activeBoardId).subscribe(board => {
+            const boardData:Board = board['board'];
+            this.loadBoard(boardData);
+            
+        },(error)=>{
+            
+        })
     }
 
-    private loadBoard(boardTitle: string) {
+    private loadBoard(boardData: Board) {
         this.clearGridModelAndGadgetInstanceStructures();
-        const selectedBoard = this.boards.find(board => board.title === boardTitle);
-        this.setModel(selectedBoard);
+        this.setModel(boardData);
         this.updateServicesAndGridWithModel();
-        this.boardUpdateEvent.emit(boardTitle);
+        this.boardUpdateEvent.emit(boardData);
     }
 
     private loadDefaultBoard() {
@@ -428,7 +421,7 @@ export class GridComponent {
 
             this.setModel(res);
             this.getModel().title = name;
-            this.getModel().boardInstanceId = new Date().getTime();
+            // this.getModel().boardInstanceId = new Date().getTime();
 
             this.updateServicesAndGridWithModel();
             this.saveBoard('Initialization of a new board', true);
@@ -473,30 +466,30 @@ export class GridComponent {
 
     private setGadgetInsertPosition() {
 
-        for (let x = 0; x < this.getModel().rows.length; x++) {
+//         for (let x = 0; x < this.getModel().rows.length; x++) {
 
-            for (let y = 0; y < this.getModel().rows[x].columns.length; y++) {
+//             for (let y = 0; y < this.getModel().rows[x].columns.length; y++) {
 
-                if (this.getModel().rows[x].columns[y].gadgets && this.getModel().rows[x].columns[y].gadgets.length === 0) {
+//                 if (this.getModel().rows[x].columns[y].gadgets && this.getModel().rows[x].columns[y].gadgets.length === 0) {
 
-                    this.gridInsertionPosition.x = x;
-                    this.gridInsertionPosition.y = y;
-                    return;
+//                     this.gridInsertionPosition.x = x;
+//                     this.gridInsertionPosition.y = y;
+//                     return;
 
-                }
-            }
-        }
-// we go here because the board is either empty or full
-// insert in the top left most cell
-        this.gridInsertionPosition.y = 0;
+//                 }
+//             }
+//         }
+// // we go here because the board is either empty or full
+// // insert in the top left most cell
+//         this.gridInsertionPosition.y = 0;
 
-        if (this.noGadgets) {
-            // there are no gadgets so insert in top row
-            this.gridInsertionPosition.x = 0;
-        } else {
-            // board is full so insert in the last row
-            this.gridInsertionPosition.x = this.getModel().rows.length - 1;
-        }
+//         if (this.noGadgets) {
+//             // there are no gadgets so insert in top row
+//             this.gridInsertionPosition.x = 0;
+//         } else {
+//             // board is full so insert in the last row
+//             this.gridInsertionPosition.x = this.getModel().rows.length - 1;
+//         }
     }
 
 }

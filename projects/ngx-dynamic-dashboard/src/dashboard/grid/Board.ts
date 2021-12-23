@@ -1,22 +1,20 @@
 export interface Board {
-    rows: Row[],
     title: string,
-    boardInstanceId: number,
-    id: number,
-    structure: Structure
+    id: string,
+    boardURL: string,
+    orderGadgets: orderGadget[]  
 }
 
-export interface Structure {
-    id: number,
-    rows: Row[],
-    structure: Structure
+export interface orderGadget {
+    cols: number,
+    rows: number,
+    x: number,
+    y: number
+    gadget : Gadget
+
 }
-export interface Row {
-    columns: Column[]
-}
-export interface Column {
-    gadgets: Gadget[]
-}
+
+
 export interface Gadget {
     instanceId: number;
     componentType: string,

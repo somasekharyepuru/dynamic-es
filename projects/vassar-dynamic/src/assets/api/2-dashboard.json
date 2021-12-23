@@ -1,0 +1,21 @@
+{
+    "board": {
+        "title": "Board Sample 2",
+        "boardInstanceId": 2,
+        "boardURL": "Rainfall2",
+        "order_cards": [
+            {
+                "cols": 4,
+                "rows": 3,
+                "x": 0,
+                "y": 0,
+                "cardId": 1,
+                "cardInfo": {
+                    "title": "Dummy BarChart",
+                    "type": "barChart",
+                    "apiUrl": "data.json"
+                }
+            }
+        ]
+    }
+}
