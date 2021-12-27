@@ -6,8 +6,9 @@ import {AddGadgetService} from '../add-gadget/service';
 import {ToastService} from '../toast/toast.service';
 import {MenuEventService} from '../menu/menu-service';
 import {IEvent} from '../menu/IEvent';
-import {Board} from './Board';
+import {Board, OrderGadget} from './Board';
 import { GridType, DisplayGrid } from 'angular-gridster2';
+import { GridService } from '../services/grid.service';
 
 
 @Component({
@@ -59,7 +60,8 @@ export class GridComponent implements OnInit {
                 private _configurationService: ConfigurationService,
                 private _gadgetLibraryService: AddGadgetService,
                 private _toastService: ToastService,
-                private _menuEventService: MenuEventService) {
+                private _menuEventService: MenuEventService,
+                private _gridService:GridService) {
 
 
        
@@ -228,6 +230,17 @@ export class GridComponent implements OnInit {
         _gadget.instanceId = new Date().getTime();
         _gadget.config = new GadgetConfigModel(gadget.config);
 
+        console.log(this.getModel())
+        const position = this._gridService.getPositionForNewDashCard(this.getModel().orderGadgets)
+        
+        const orderGadget:OrderGadget = Object.assign({},position);
+        orderGadget.gadget = _gadget;
+        this.model.orderGadgets.push(orderGadget);
+        this.saveBoard('Adding Gadget To The Board', false);
+        
+
+
+
         // this.setGadgetInsertPosition();
 
         // const x = this.gridInsertionPosition.x;
@@ -240,6 +253,8 @@ export class GridComponent implements OnInit {
         // this.getModel().rows[x].columns[y].gadgets.push(_gadget);
 
         // this.saveBoard('Adding Gadget To The Board', false);
+
+
 
     }
 

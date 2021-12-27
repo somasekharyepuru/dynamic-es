@@ -2,15 +2,15 @@ export interface Board {
     title: string,
     id: string,
     boardURL: string,
-    orderGadgets: orderGadget[]  
+    orderGadgets: OrderGadget[]  
 }
 
-export interface orderGadget {
+export interface OrderGadget {
     cols: number,
     rows: number,
     x: number,
     y: number
-    gadget : Gadget
+    gadget?: Gadget
 
 }
 
