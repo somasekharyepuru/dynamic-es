@@ -1,0 +1,16 @@
+<div class="container-fluid mt-4">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between">
+          <h3 class="">{{gadgetConfig.value?.basic?.title}}</h3>
+          <h4 (click)="toggleSettings()">Settings</h4>
+        </div>
+        <div class="card-body">
+          <div class="settings-mode" *ngIf="settingsMode">
+            <vl-form-tabs [gadgetType]="gadgetType" [gadgetConfig]="gadgetConfig" *ngIf="showChart" (updateFormValue)="updateFormValue($event)"></vl-form-tabs>
+          </div>
+          <div class="component-mode" *ngIf="!settingsMode">
+            <vl-highcharts-renderer [chartOptions]="chartOptions" *ngIf="showChart"></vl-highcharts-renderer>
+          </div>
+        </div>
+      </div>
+    </div>

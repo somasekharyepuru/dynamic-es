@@ -1,0 +1,17 @@
+<div *ngIf="gadgetData?.config?.propertyPages?.length > 0 && showGadgetConfig">
+  <tabset>
+      <tab *ngFor="let group of gadgetData?.config?.propertyPages" [id]="group.groupId" [heading]="group.displayName">
+        <div class="mt-2">
+        <app-vl-filter
+            [filterConfig]="filterConfigs[group.groupId]"
+            [formGroupInput]="form.get(group.groupId)"
+            [initFilterData]="gadgetConfig.value[group.groupId]"
+            (formChange)="changeFormValue($event, group.groupId)">
+        </app-vl-filter>
+        </div>
+      </tab>
+  </tabset>
+</div>
+<!-- todo vl filter addition here for each tab thing here -->
+<!-- todo may be we could have use the template to render the tab content here -->
+

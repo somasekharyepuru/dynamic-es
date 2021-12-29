@@ -1,0 +1,82 @@
+<div [formGroup]='filterForm' *ngIf="showForm">
+  <div class="form-row">
+    <div class="col-12" *ngFor="let config of filterConfig.filterConfig">
+      <div class="form-group">
+        <template [ngTemplateOutlet]="templateTypes[config.inputType]"
+          [ngTemplateOutletContext]='{inputConfig: config, control: filterForm.get(config.key)}'></template>
+      </div>
+    </div>
+    <div class="col-12">
+      <button style="margin:5px;" type="submit" (click)="submitForm()" class="text-center btn btn-primary btn-sm" [disabled]='filterForm.invalid'>Submit</button>
+      <!-- <button type="submit" (click)="resetForm()" class="text-center btn btn-secondary btn-sm">Reset</button> -->
+    </div>
+  </div>
+</div>
+
+<ng-template  type='select' #select let-inputConfig="inputConfig" let-control='control'>
+  <label [for]="inputConfig.key" class="checkbox-inline mr-2">{{inputConfig.title}}</label>
+  <!-- <app-vl-select [selectConfig]='inputConfig.selectConfig' [control]='control'></app-vl-select> -->
+</ng-template>
+<ng-template type='text' #text let-inputConfig="inputConfig" let-control='control'>
+  <label [for]="inputConfig.key">{{inputConfig.title}}</label>
+  <input type="text" [id]="inputConfig.key" [name]="inputConfig.key" class="form-control" [formControl]="control" [placeholder]='inputConfig.title'>
+</ng-template>
+<ng-template type='radio' #radio let-inputConfig="inputConfig" let-control='control'>
+  <label class="radio-inline mr-2" *ngFor='let options of inputConfig?.radioConfig?.options'>
+    <input type="radio" [id]="inputConfig.key" [name]="inputConfig.key" [value]="options.key" [formControl]='control'>{{options.title}}
+  </label>
+</ng-template>
+<ng-template type='tab' #tab let-inputConfig="inputConfig" let-control='control'>
+
+</ng-template>
+<ng-template type='textArea' #textArea let-inputConfig="inputConfig" let-control='control'>
+  <label [for]="inputConfig.key">{{inputConfig.title}}</label>
+
+  <textarea [name]="inputConfig.key" [id]="inputConfig.key" [formControl]='control' class="form-control"></textarea>
+  <ngx-monaco-editor [formControl]="control" class="form-control"[options]="editorOptions" ></ngx-monaco-editor>
+
+</ng-template>
+<ng-template type='checkBox' #checkBox let-inputConfig="inputConfig" let-control='control'>
+  <label [for]="inputConfig.key" class="checkbox-inline mr-2">{{inputConfig.title}}</label>
+  <input class="checkbox-inline mr-2" type="checkbox" class="form-control" [name]="inputConfig.key" [id]="inputConfig.key" [formControl]="control"/>
+</ng-template>
+<ng-template type="formArray" #formArray let-inputConfig="inputConfig" let-control='control'>
+  <div class="form-row" *ngFor="let config of $any(filterForm.get(inputConfig.key)).controls;let i=index;let first=first;let last=last;">
+    <div class="col" *ngFor="let innerForm of getHeaders(config.controls);let innerIndex=index" [formGroup]="config.controls[innerForm]">
+      <div class="form-group">
+        <template [ngTemplateOutlet]="templateTypes[inputConfig.childs[innerIndex].inputType]"
+          [ngTemplateOutletContext]='{inputConfig: inputConfig.childs[innerIndex], control: config.controls[innerForm]}'></template>
+      </div>
+
+    </div>
+    <div class="col mt-2rem">
+      <button class="btn btn-primary mr-2" *ngIf="last" (click)="addToFormArray(inputConfig)"><i class="fa fa-plus"></i></button>
+      <button class="btn btn-danger" *ngIf="!first" (click)="deleteFromFormArray(inputConfig, i)"><i class="fa fa-minus"></i></button>
+    </div>
+  </div>
+</ng-template>
+<ng-template type="colorPicker" #colorPicker let-inputConfig="inputConfig" let-control='control'>
+  <label [for]="inputConfig.key" class="checkbox-inline mr-2">{{inputConfig.title}}</label>
+  <input type="color" class="form-control" [name]="inputConfig.key" [id]="inputConfig.key" [formControl]="control"/>
+</ng-template>
+
+<ng-template type='json' #json let-inputConfig="inputConfig" let-control='control'>
+  <label [for]="inputConfig.key">{{inputConfig.title}}</label>
+  <div class="editor">
+    <ngx-monaco-editor [formControl]="control" [options]="{language: 'json', theme: 'vs-dark', lineNumbers: 'off'}" [uri]="modelUri" (init)="onEditorInit($event, 'json')"></ngx-monaco-editor>
+  </div>
+
+</ng-template>
+
+<ng-template type='javascript' #javascript let-inputConfig="inputConfig" let-control='control'>
+  <label [for]="inputConfig.key">{{inputConfig.title}}</label>
+  <div class="editor">
+    <ngx-monaco-editor [formControl]="control" [options]="{language: 'javascript', theme: 'vs-dark', lineNumbers: 'off'}" (init)="onEditorInit($event, 'javascript')"></ngx-monaco-editor>
+  </div>
+</ng-template>
+
+<!-- <ng-template type='codeEditor' #codeEditor let-inputConfig="inputConfig" let-control='control'>
+  <label [for]="inputConfig.key">{{inputConfig.title}}</label>
+  <ngx-monaco-editor [formControl]="control"></ngx-monaco-editor>
+</ng-template> -->
+

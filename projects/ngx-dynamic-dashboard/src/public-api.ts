@@ -71,3 +71,63 @@ export * from './dashboard/services/runtime.service';
 
 export * from './dashboard/services/external.service';
 
+export * from "./models/library.model";
+
+// core module things
+
+// export * from './modules/vl-core';
+
+// export * from "./modules/board";
+
+// export * from "./modules/shared";
+export * from "./modules/shared/shared-directives/dynamic-component-load.directive";
+export * from "./modules/shared/shared-directives/template-reference.directive";
+export * from "./modules/shared/shared-directives/validation.directive";
+export * from './modules/vl-core/vl-core-modules/highcharts-renderer/highcharts-renderer.component';
+export * from './modules/vl-core/vl-core-modules/highcharts-renderer/highcharts-renderer.module';
+export * from './modules/vl-core/vl-core-modules/vl-filter/vl-filter-models/vl-filter.model';
+export * from './modules/vl-core/vl-core-modules/vl-filter/vl_filter_constants/date_picker_defaults.cnst';
+export * from './modules/vl-core/vl-core-modules/vl-filter/vl-filter.component';
+export * from "./modules/vl-core/vl-core-modules/vl-select/vl-select-models/vl-select-dropdown";
+export * from "./modules/vl-core/vl-core-modules/vl-select/vl-select.component";
+export * from "./modules/vl-core/vl-core-modules/vl-select/vl-select.module";
+export * from "./modules/vl-core/vl-core-services/vl-chart/highcharts-pie--skeleton.cnst";
+export * from "./modules/vl-core/vl-core-services/vl-chart/highcharts.cnst";
+export * from "./modules/vl-core/vl-core-services/vl-data/vl-data.service";
+export * from "./modules/vl-core/vl-core-services/vl-date/date_utils.cnts";
+export * from "./modules/vl-core/vl-core-services/vl-date/vl-date-format.service";
+export * from "./modules/vl-core/vl-core-services/vl-date/vl-date-utils.service";
+export * from "./modules/vl-core/vl-core-services/vl-http/default-http-config.cnst";
+export * from "./modules/vl-core/vl-core-services/vl-http/http-api.config";
+export * from "./modules/vl-core/vl-core-services/vl-http/vl-http.service";
+export * from "./modules/vl-core/vl-core-services/vl-storage.service";
+export * from "./modules/vl-core/vl-core-services/vl_util_functions/common-utils";
+export * from "./modules/vl-core/vl-core.module"
+
+export * from "./modules/board/models/Board";
+export * from "./modules/board/services/board.service";
+export * from "./modules/board/services/gadget.service";
+export * from "./modules/board/board.component";
+export *from "./modules/board/components/form-tabs/form-tabs.component";
+export * from "./modules/board/components/form-tabs/formtab.service";
+export * from "./modules/board/board.module";
+
+
+
+export * from "./modules/shared/shared-services/shared-filter.service";
+export * from "./modules/shared/shared.module";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

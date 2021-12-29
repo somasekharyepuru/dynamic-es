@@ -1,22 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BarChartComponent } from './bar-chart/bar-chart.component';
-import {DynamicFormModule, ErrorHandlerModule, GadgetSharedModule} from 'ngx-dynamic-dashboard';
-
-import {HighchartsRendererModule} from '../core/highcharts-renderer/highcharts-renderer.module'
-
-
+import { BarChartWidgetComponent } from "./components/bar-chart-widget/bar-chart-widget.component";
+import { VLBoardModule } from 'ngx-dynamic-dashboard/public-api';
 
 
 @NgModule({
-  declarations: [BarChartComponent],
+  declarations: [BarChartWidgetComponent],
   imports: [
-    CommonModule,
-    GadgetSharedModule,
-    DynamicFormModule,
-    HighchartsRendererModule,
-    ErrorHandlerModule
+    CommonModule
   ],
-  entryComponents: [BarChartComponent]
+  exports: [BarChartWidgetComponent]
 })
 export class GadgetModule { }

@@ -8,21 +8,21 @@
         </div>
 
         <div *ngFor="let page of propertyPages; let i = index"
-             [@contentSwitch]="page.groupId == currentTab ? 'active':'inactive'" [ngClass]="{'active': page.groupId == currentTab }"
-             attr.data-tab="{{page.groupId}}"
-             class="proppages ui bottom attached tab segment">
-
-
-            <div *ngFor="let property of page.properties"
-                 class="form-row">
-                <dashboard-df-property
-                    [form]="form.get(page.groupId)"
-                    [gadgetTags]="gadgetTags"
-                    [property]="property"
-                >
-                </dashboard-df-property>
-                <br>
-            </div>
+        [@contentSwitch]="page.groupId == currentTab ? 'active':'inactive'" [ngClass]="{'active': page.groupId == currentTab }"
+        attr.data-tab="{{page.groupId}}"
+        class="proppages ui bottom attached tab segment">
+        
+        <div *ngFor="let property of page.properties"
+             class="form-row">
+            <dashboard-df-property
+                [form]="form.get(page.groupId)"
+                [gadgetTags]="gadgetTags"
+                [property]="property"
+            >
+            </dashboard-df-property>
+            <br>
+        </div>
+        
 
         </div>
         <div class="form-row field">

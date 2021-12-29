@@ -1,6 +1,6 @@
 {
   "board": {
-    "title": "Board Sample 1",
+    "title": "Rainfall Dashboard",
     "id": 1,
     "boardURL": "Rainfall",
     "orderGadgets": [
@@ -14,133 +14,232 @@
           "name": "Bar Chart",
           "description": "Chart",
           "icon": "assets/images/pie.png",
-          "instanceId": -1,
+          "instanceId": 11,
           "tags": [],
           "config": {
             "propertyPages": [
               {
                 "displayName": "Basic",
-                "groupId": "run",
+                "groupId": "basic",
                 "position": 10,
                 "properties": [
                   {
-                    "controlType": "textbox",
-                    "key": "url",
-                    "label": "Chart URL",
-                    "value": "RAINFALL_CHART",
-                    "required": true,
-                    "order": 3
-                  },
-                  {
-                    "controlType": "textbox",
+                    "inputType": "text",
                     "key": "title",
-                    "label": "Title",
-                    "value": "Bar Chart",
-                    "required": true,
-                    "order": 1
+                    "title": "Title",
+                    "defaultValue": "Bar Chart",
+                    "isMandatory": true
                   },
                   {
-                    "controlType": "textarea",
+                    "inputType": "select",
+                    "key": "method",
+                    "title": "Method",
+                    "defaultValue": "get",
+                    "isMandatory": true,
+                    "selectConfig": {
+                      "title": "Method",
+                      "key": "method",
+                      "type": "manual",
+                      "options": [
+                        {
+                          "title": "Get",
+                          "key": "get"
+                        },
+                        {
+                          "title": "Post",
+                          "key": "post"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "inputType": "text",
+                    "title": "URL",
+                    "key": "url",
+                    "isMandatory": true,
+                    "defaultValue": "RAINFALL_CHART"
+                  },
+                  {
+                    "inputType": "json",
                     "key": "postData",
-                    "label": "Post Data",
-                    "value": "",
-                    "required": false,
-                    "order": 4
-                  },
-                  {
-                    "controlType": "hidden",
-                    "key": "instanceId",
-                    "label": "",
-                    "value": 2,
-                    "required": true,
-                    "order": -1
+                    "title": "Post Data",
+                    "isMandatory": false
                   }
                 ]
               },
               {
-                "displayName": "Render",
-                "groupId": "render",
-                "position": 10,
+                "displayName": "Styling",
+                "groupId": "styling",
                 "properties": [
                   {
-                    "controlType": "textbox",
+                    "inputType": "text",
                     "key": "xAxisLabel",
-                    "label": "X-Axis Label",
-                    "value": "",
-                    "required": false,
-                    "order": 3
+                    "title": "X-Axis Label",
+                    "defaultValue": "",
+                    "isMandatory": false
                   },
                   {
-                    "controlType": "textbox",
+                    "inputType": "text",
                     "key": "xAxisPath",
-                    "label": "X-Axis Json Path",
-                    "value": "",
-                    "required": false,
-                    "order": 4
+                    "title": "X-Axis Path",
+                    "defaultValue": "",
+                    "isMandatory": false
                   },
                   {
-                    "controlType": "formGroup",
-                    "key": "yAxis",
-                    "label": "Y-Axis",
-                    "value": "",
-                    "required": true,
-                    "order": 4,
-                    "child": [
+                    "inputType": "text",
+                    "key": "yAxisLabel",
+                    "title": "Y-Axis Label",
+                    "defaultValue": "",
+                    "isMandatory": false
+                  },
+                  {
+                    "inputType": "formArray",
+                    "key": "applications",
+                    "title": "Applications",
+                    "defaultValue": "",
+                    "isMandatory": false,
+                    "childs": [
                       {
-                        "controlType": "textbox",
-                        "key": "label",
-                        "label": "Label",
-                        "value": "",
-                        "required": true,
+                        "inputType": "text",
+                        "key": "title",
+                        "title": "Label",
+                        "defaultValue": "",
+                        "isMandatory": true,
                         "order": 1
                       },
                       {
-                        "controlType": "textbox",
+                        "inputType": "text",
                         "key": "path",
-                        "label": "path",
-                        "value": "",
-                        "required": true,
-                        "order": 2
+                        "title": "Path",
+                        "defaultValue": "",
+                        "isMandatory": true
                       },
                       {
-                        "controlType": "colorPicker",
+                        "inputType": "colorPicker",
                         "key": "color",
-                        "label": "color",
-                        "value": "",
-                        "required": true,
-                        "order": 2
+                        "title": "Color",
+                        "defaultValue": "",
+                        "isMandatory": true
                       },
                       {
-                        "controlType": "dropdpwn",
+                        "inputType": "select",
                         "key": "position",
-                        "label": "position",
-                        "value": "left",
-                        "required": false,
-                        "order": 2,
-                        "options": [
-                          {
-                            "key": "Left",
-                            "value": "left"
-                          },
-                          {
-                            "key": "Right",
-                            "value": "right"
-                          }
-                        ]
+                        "title": "Position",
+                        "defaultValue": "left",
+                        "isMandatory": false,
+                        "selectConfig": {
+                          "title": "position",
+                          "key": "position",
+                          "type": "manual",
+                          "options": [
+                            {
+                              "title": "Left",
+                              "key": "left"
+                            },
+                            {
+                              "title": "Right",
+                              "key": "right"
+                            }
+                          ]
+                        }
                       }
                     ]
                   },
                   {
-                    "controlType": "hidden",
+                    "inputType": "colorPicker",
+                    "key": "backgroundColor",
+                    "title": "Back Ground Color"
+                  },
+                  {
+                    "inputType": "checkBox",
+                    "key": "isThreeD",
+                    "title": "3D"
+                  },
+                  {
+                    "inputType": "checkBox",
+                    "key": "showLegend",
+                    "title": "Show Legend"
+                  },
+                  {
+                    "inputType": "hidden",
                     "key": "instanceId",
-                    "label": "",
-                    "value": 2,
-                    "required": true,
-                    "order": -1
+                    "title": "",
+                    "defaultValue": 2,
+                    "isMandatory": true
+                  }
+                ]
+              },
+              {
+                "displayName": "Advanced",
+                "groupId": "advanced",
+                "position": 3,
+                "properties": [
+                  {
+                    "inputType": "json",
+                    "key": "highChartsJSON",
+                    "title": "Highcharts Json",
+                    "isMandatory": false
+                  },
+                  {
+                    "inputType": "javascript",
+                    "title": "Custom JS",
+                    "key": "customJS",
+                    "isMandatory": false
                   }
                 ]
               }
             ]
+          },
+          "value": {
+            "basic": {
+              "title": "Bar Chart",
+              "method": "post",
+              "url": " https://apwrims.ap.gov.in/api/rf/rfTable",
+              "postData": {
+                "aggr": "SUM",
+                "component": "rainfall",
+                "summary": true,
+                "sUUID": "6f86292b-dd9a-4987-bb8f-c3940263b349",
+                "format": "yyyyMMdd",
+                "pDate": "2018",
+                "cType": "DISTRICT",
+                "pUUID": "6f86292b-dd9a-4987-bb8f-c3940263b349",
+                "src": "AWS",
+                "sDate": "20210601",
+                "eDate": "20211229",
+                "view": "ADMIN",
+                "lType": "STATE",
+                "timePeriod": "monsoon",
+                "sample": "sample Here"
+              }
+            },
+            "styling": {
+              "xAxisLabel": "Label Text Here",
+              "xAxisPath": "locName",
+              "yAxisLabel": "Vals",
+              "applications": [
+                {
+                  "title": "Act Rainfall",
+                  "path": "responseMap.cm.actual",
+                  "color": "#001cf0",
+                  "position": "left"
+                },
+                {
+                  "title": "Normal Rainfall",
+                  "path": "responseMap.cm.normal",
+                  "color": "#612941",
+                  "position": "left"
+                }
+              ],
+              "backgroundColor": "#f6eeee",
+              "isThreeD": false,
+              "showLegend": true,
+              "instanceId": 2
+            },
+            "advanced": {
+              "highChartsJSON": "{\n    \"$schema\": \"http://json-schema.org/draft-04/schema\"\n}",
+              "customJS": null
+            }
           },
           "actions": [
             {

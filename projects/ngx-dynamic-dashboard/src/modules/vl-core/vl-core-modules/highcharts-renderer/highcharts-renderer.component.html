@@ -1,0 +1,10 @@
+<highcharts-chart class="highcharts__renderer" *ngIf='dataPresent'
+  [Highcharts]="Highcharts"
+  [options]="chartOptions"
+  [(update)]="updateChart"
+  [oneToOne]="true"
+  [ngStyle]="{
+    'height': !!height ? height: 400
+  }"
+>
+</highcharts-chart>

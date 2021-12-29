@@ -71,10 +71,12 @@ export class DynamicFormComponent implements OnInit, AfterViewInit {
     /* better solution that solves error: Expression has changed after it was checked exception resolution*/
     ngAfterViewInit(): void {
         this.changeDetectionRef.detectChanges();
+        console.log(this.propertyPages, 'property pages')
     }
 
     ngOnInit() {
         this.form = this.pcs.toFormGroupFromPP(this.propertyPages);
+        
     }
 
     onSubmit() {

@@ -1,0 +1,36 @@
+
+<ng-select
+[items] = "optionsArray | async"
+[bindLabel] = "actualConfig.bindLabel"
+[bindValue]= "actualConfig.bindValue"
+[loading] = "loading"
+[virtualScroll] = "virtualScroll"
+[loadingText] = "actualConfig.loadingText"
+[multiple] = "actualConfig.multiple"
+placeholder="Select {{selectConfig.title}}"
+notFoundText = "No {{selectConfig.title}} found"
+[clearable] = "actualConfig.clearable"
+[(ngModel)] = "selectedItems"
+(change) = "optionChanged($event)"
+[disabled] = "selectConfig.disabled"
+[ngStyle]="{ width: width ? width + 'px' : '100%'}"
+>
+<ng-template ng-label-tmp let-item="item">
+    <span *ngIf="item.icon || selectConfig.icon">
+        <img *ngIf="item.icon" height="15" width="15" [src]="item.icon"/>
+        <img *ngIf="!item.icon && selectConfig.icon" [src]="selectConfig.icon" height="15" width="15">
+        &nbsp;
+    </span>
+    <span>
+        {{item[actualConfig.bindLabel]}}
+    </span>
+</ng-template>
+<ng-template ng-option-tmp let-item="item" let-index="index">
+    <div>
+        <span *ngIf="item.icon">
+            <img height="15" width="15" [src]="item.icon">
+        </span> &nbsp;
+        <span>{{item[actualConfig.bindLabel]}}</span>
+    </div>
+</ng-template>
+</ng-select>

@@ -1,0 +1,12 @@
+import { Path, Config } from '../enums';
+export const ProjConstants = {
+  HOME_ROUTE: '/',
+  PARAM_SEPARATOR: '__',
+  STATE_UUID: '6f86292b-dd9a-4987-bb8f-c3940263b349',
+  FORECAST_STATE_UUID: '2b9beab2-1495-4f05-b4da-29761ebeb2ee',
+  STATE_NAME: 'AP',
+  FORECAST_STATE_NAME: 'ANDHRA PRADESH',
+  STATE_BOUNDS: [[12.60004, 76.75599], [19.15689, 84.76102]],
+  FORECAST_WORKSPACE_NAME: 'forecast',
+  APWRIMS_WORKSPACE_NAME: 'APWRIMS',
+};

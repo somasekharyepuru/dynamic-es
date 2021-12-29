@@ -6,6 +6,7 @@ import {HiddenProperty} from '../../dynamic-form/property-hidden';
 import {CheckboxProperty} from '../../dynamic-form/property-checkbox';
 import {DynamicDropdownProperty} from '../../dynamic-form/property-dynamicdropdown';
 import {NumberProperty} from '../../dynamic-form/property-number';
+import { TextAreaProperty } from '../../dynamic-form/property-text-area';
 
 @Injectable()
 export class GadgetPropertyService {
@@ -38,7 +39,9 @@ export class GadgetPropertyService {
             } else if (property.controlType === 'dynamicdropdown') {
                 ctrl = new DynamicDropdownProperty(property);
                 properties.push(ctrl);
-
+            } else if (property.controlType === 'textarea') {
+                ctrl = new TextAreaProperty(property);
+                properties.push(ctrl);
             }
         });
 

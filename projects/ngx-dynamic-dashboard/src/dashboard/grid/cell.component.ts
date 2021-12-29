@@ -49,6 +49,7 @@ export class CellComponent implements OnInit {
              */
             gadgetRef.instance.configureGadget(this.gadgetInstanceId, this.gadgetConfig, this.gadgetTags);
 
+
             /*
              add concrete component to service for tracking
              */

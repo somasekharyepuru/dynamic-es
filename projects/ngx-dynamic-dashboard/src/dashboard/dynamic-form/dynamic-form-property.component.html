@@ -5,51 +5,43 @@
 
         <div [ngSwitch]="property.controlType">
 
-            <input *ngSwitchCase="'textbox'"
-                   [formControlName]="property.key"
-                   [id]="property.key"
-                   [type]="property.type">
+            <input *ngSwitchCase="'textbox'" [formControlName]="property.key" [id]="property.key"
+                [type]="property.type">
 
-            <select *ngSwitchCase="'dropdown'"
-                    [formControlName]="property.key"
-                    [id]="property.key">
+            <select *ngSwitchCase="'dropdown'" [formControlName]="property.key" [id]="property.key">
 
-                <option *ngFor="let opt of property.options"
-                        [value]="opt.value">{{opt.key}}
+                <option *ngFor="let opt of property.options" [value]="opt.value">{{opt.key}}
                 </option>
             </select>
 
             <!--todo - fix checkbox type. The value is not properly set by the data so using hard coded type -->
-            <input (change)="property.value = $event.target.checked"
-                   *ngSwitchCase="'checkbox'"
-                   [(ngModel)]="property.value"
-                   [attr.checked]="property.value ? true : null"
-                   [formControlName]="property.key"
-                   [id]="property.key"
-                   [type]="'checkbox'">
+            <input (change)="property.value = $event.target.checked" *ngSwitchCase="'checkbox'"
+                [(ngModel)]="property.value" [attr.checked]="property.value ? true : null"
+                [formControlName]="property.key" [id]="property.key" [type]="'checkbox'">
 
-            <input *ngSwitchCase="'number'"
-                   [formControlName]="property.key"
-                   [id]="property.key"
-                   [type]="'number'">
+            <input *ngSwitchCase="'number'" [formControlName]="property.key" [id]="property.key" [type]="'number'">
 
 
-            <input *ngSwitchCase="'hidden'"
-                   [formControlName]="property.key"
-                   [id]="property.key"
-                   [type]="property.type">
+            <input *ngSwitchCase="'hidden'" [formControlName]="property.key" [id]="property.key" [type]="property.type">
 
-            <select (change)="property.value = $event.target.toString()"
-                    *ngSwitchCase="'dynamicdropdown'"
-                    [formControlName]="property.key"
-                    [id]="property.key">
+            <select (change)="property.value = $event.target.toString()" *ngSwitchCase="'dynamicdropdown'"
+                [formControlName]="property.key" [id]="property.key">
 
                 <option></option>
-                <option *ngFor="let opt of endPoints"
-                        [value]="opt?.name">{{opt?.name}}
+                <option *ngFor="let opt of endPoints" [value]="opt?.name">{{opt?.name}}
                 </option>
+                <!-- custom implementations-->
 
             </select>
+            <!-- todo we need add the key value pair to achieve this thing -->
+            <textarea 
+            *ngSwitchCase="'textarea'"
+            rows="3"
+            cols="3" 
+            [formControlName]="property.key"
+            [id]="property.key">
+            </textarea>
+            <!--todo need to add things radio, formArray, formGroup, colorPicker-->
         </div>
     </div>
 
