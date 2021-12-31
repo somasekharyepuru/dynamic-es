@@ -15,7 +15,7 @@
         "lib": ["es2018", "dom"],
         "paths": {
             "ngx-df-lib": ["dist/ngx-df-lib", "dist/ngx-df-lib/ngx-df-lib"],
-            "ngx-dynamic-dashboard": ["./dist/ngx-dynamic-dashboard"]
+            "ngx-dynamic-dashboard": ["node_modules/ngx-dynamic-dashboard"]
         }
     },
     "angularCompilerOptions": {

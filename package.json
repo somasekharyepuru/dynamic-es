@@ -16,7 +16,7 @@
     "e2e": "ng e2e",
     "package": "",
     "lib:build": "ng build ngx-dynamic-dashboard --watch",
-    "lib:build-prod": "ng build --prod ngx-dynamic-dashboard",
+    "lib:build-prod": "ng build --prod ngx-dynamic-dashboard --watch",
     "proj:serve": "ng serve --o --port=8092 --poll=2000"
   },
   "private": false,

@@ -8,8 +8,8 @@
       "node"
     ],
     "paths": {
-      "ngx-dynamic-dashboard": ["dist/ngx-dynamic-dashboard"],
-      "ngx-dynamic-dashboard/*": ["dist/ngx-dynamic-dashboard/*"]
+      "ngx-dynamic-dashboard": ["node_modules/ngx-dynamic-dashboard"],
+      "ngx-dynamic-dashboard/*": ["node_modules/ngx-dynamic-dashboard/*"]
     }
   },
   "files": [

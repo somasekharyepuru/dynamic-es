@@ -33,13 +33,16 @@ export class BarChartWidgetComponent implements OnInit {
 
   configureGadget(gadgetConfig: Gadget) {
     this.gadgetConfig = gadgetConfig;
+    console.log(this.gadgetConfig, 'gadget config here')
   }
 
   private getConfiguration(): void {
     this.barChartWidgetService.getConfig(this.gadgetConfig).subscribe( data => {
+      console.log('coming here in the things')
       this.chartOptions = data;
       this.showChart = true;
     }, error => {
+      console.log('coming here in the things in the error block')
       this.chartOptions = {};
       this.showChart = true;
     })

@@ -47,7 +47,7 @@ export class CellComponent implements OnInit {
             /*
              we need to pass the input parameters (instance id and config) back into the newly created component.
              */
-            gadgetRef.instance.configureGadget(this.gadgetInstanceId, this.gadgetConfig, this.gadgetTags);
+            gadgetRef.instance.configureGadget(this.gadgetConfig);
 
 
             /*
